@@ -44,13 +44,16 @@ class Vectors:
                                  f"\nПроизведение умножения вектора B на {scalar}: {multiplicationB}")
                         print("Error! Введите число.")
             case 2:
+                #Модуль вектора
                 magnitudeA = np.linalg.norm(self.vectorA)
                 magnitudeB = np.linalg.norm(self.vectorB)
                 print(f"Модуль вектора А = {magnitudeA}. Модуль вектора Б = {magnitudeB}")
             case 3:
-                multiplication = np.dot(self.vectorA, self.vectorB)
+                #Скалярное произведение векторов
+                multiplication = np.dot(self.vectorA,self.vectorB)
                 print(f"Скалярное произведение векторов А и В: {multiplication}")
             case 4:
+                #Нормализация вектора А и Б
                 normalizedA = self.vectorA / np.linalg.norm(self.vectorA)
                 normalizedB = self.vectorB / np.linalg.norm(self.vectorB)
                 print(f"Нормализированный вектор А: {normalizedA}"
@@ -62,6 +65,7 @@ class Matrix():
             try:
                 self.rowsA = int(input("Количество строк в матрице A: "))
                 self.colsA = int(input("Количество столбцов в матрице A: "))
+                self.coordinats = self.rowsA, self.colsA
                 self.rowsB = int(input("Количество строк в матрице B: "))
                 self.colsB = int(input("Количество столбцов в матрице B: "))
                 if(self.rowsA != self.rowsB or self.colsA != self.colsB or self.rowsB != self.rowsA or self.colsB != self.colsA):
@@ -129,6 +133,13 @@ class Matrix():
                 #Умножение 2х матрицы
                 multiplication = np.dot(self.matrixA, self.matrixB)
                 print(f"Прозведение матрицы А и В = {multiplication}")
+            case 4:
+                #Умножение на еденичную матрицу
+                multiplicationA = np.dot(np.eye(self.coordinats, dtype=int), self.matrixA)
+                multiplicationB = np.dot(np.eye(self.coordinats, dtype=int), self.matrixB)
+                print(f"Произведение матрицы А на еденичную матрицу {multiplicationA}"
+                      f"\nПроизведение матрицы B на еденичную матрицу {multiplicationB}")
+
 
 def main():
     print("----С чем вы хотите работать?----"
@@ -160,6 +171,7 @@ def main():
                   f"\n1 - Сложение/Вычитание/Умножение на скаляр"
                   f"\n2 - Нахождение детерминанта"
                   f"\n3 - Умножение 2-х матриц"
+                  f"\n4 - Умножение матрицы А и В на еденичную матрицу"
                   f"\nВаш вариант ответа: ")
             matrixOperationChoice = int(input())
             matrix.matrixOperation(matrixOperationChoice)
