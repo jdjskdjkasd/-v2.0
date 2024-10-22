@@ -63,11 +63,12 @@ class Matrix():
     def __init__(self):
         while True:
             try:
-                self.rowsA = int(input("Количество строк в матрице A: "))
-                self.colsA = int(input("Количество столбцов в матрице A: "))
+                print("----ВАШ ВЫБОР ВЛИЯЕТ НА КОЛИЧЕСТВО СТРОК И СТОЛБЦОВ ОБЕИХ МАТРИЦ----")
+                self.rowsA = int(input("Количество строк в матрице: "))
+                self.colsA = int(input("Количество столбцов в матрице: "))
                 self.coordinats = self.rowsA, self.colsA
-                self.rowsB = int(input("Количество строк в матрице B: "))
-                self.colsB = int(input("Количество столбцов в матрице B: "))
+                self.rowsB = self.rowsA
+                self.colsB = self.colsA
                 if(self.rowsA != self.rowsB or self.colsA != self.colsB or self.rowsB != self.rowsA or self.colsB != self.colsA):
                     print("Для того чтобы проводить операции над матрицами нужно, чтобы координаты матриц были равны!")
                     exit("Попробуйте заного!")
@@ -99,6 +100,13 @@ class Matrix():
                         break
                     except ValueError:
                         print("Error! Введите целое число.")
+    def transpose_Matrix(self, matrix:[list])->list[list]:
+        transposedMatrix = np.zeros_like(matrix)
+        for i in range(matrix.shape[0]):
+            for j in range(matrix.shape[1]):
+                transposedMatrix[j, i] = matrix[i, j]
+
+        return transposedMatrix
 
     def matrixOperation(self, matrixOperation):
         match(matrixOperation):
@@ -139,7 +147,12 @@ class Matrix():
                 multiplicationB = np.dot(np.eye(self.coordinats, dtype=int), self.matrixB)
                 print(f"Произведение матрицы А на еденичную матрицу {multiplicationA}"
                       f"\nПроизведение матрицы B на еденичную матрицу {multiplicationB}")
-
+            case 5:
+                #Транспонирование матрицы
+                transposeA = self.transpose_Matrix(self.matrixA)
+                transposeB = self.transpose_Matrix(self.matrixB)
+                print(f"Транспонированная матрица А {transposeA}."
+                      f"\nТранспонированная матрица B {transposeB}.")
 
 def main():
     print("----С чем вы хотите работать?----"
@@ -172,6 +185,7 @@ def main():
                   f"\n2 - Нахождение детерминанта"
                   f"\n3 - Умножение 2-х матриц"
                   f"\n4 - Умножение матрицы А и В на еденичную матрицу"
+                  f"\n5 - Транспонирование матрицы"
                   f"\nВаш вариант ответа: ")
             matrixOperationChoice = int(input())
             matrix.matrixOperation(matrixOperationChoice)
